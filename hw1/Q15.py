@@ -14,7 +14,7 @@ Description:
 """
 
 
-# %% import necessary packages
+# %% First: import necessary packages
 from IPython import get_ipython
 get_ipython().magic('clear')
 get_ipython().magic('reset -f')
@@ -22,7 +22,7 @@ import numpy as np
 from datetime import datetime
 
 
-# %% define function
+# %% Second: define function
 def getH(w, x):
     # inner product
     innerProduct = np.matmul(w, x.T)
@@ -36,7 +36,7 @@ def getH(w, x):
     return h    
 
 
-# %% preprocess
+# %% Third: preprocess
 # load data
 dataSet = np.genfromtxt("hw1_train.dat")
 
@@ -53,8 +53,9 @@ repeatTestTimes = 1000
 wSet = np.empty((repeatTestTimes, xSet.shape[1]))  # container for storing wPLA
 
 
-# %% main - do experiment
-currentTime = int(datetime.now().strftime("%H:%M:%S").replace(":", ""))  # get current time, used for seed setting.
+# %% Fourth: main - do experiment
+# get current time, used for seed setting.
+currentTime = int(datetime.now().strftime("%H:%M:%S").replace(":", ""))
 print("Start to do PLA!")
 print("\nMonitor progress:")
 for testIdx in range(repeatTestTimes):  # Repeat experiment for 1000 times
@@ -62,19 +63,25 @@ for testIdx in range(repeatTestTimes):  # Repeat experiment for 1000 times
     t = 0
     cumuCorrect = 0
     w = np.zeros(xSet.shape[1])  # initialize w
-    np.random.seed(int(currentTime*1e4)+testIdx)  # ensure each experiment is done with different seed.
+    # ensure each experiment is done with different seed.
+    np.random.seed(int(currentTime*1e4)+testIdx)
     # do PLA
     while(True):
-        idx = np.random.randint(0, xSet.shape[0])  # randomly picks an example in every iteration (with replacement)
+        # randomly picks an example in every iteration (with replacement)
+        idx = np.random.randint(0, xSet.shape[0])
         if getH(w, xSet[idx]) != ySet[idx]:
             cumuCorrect = 0
-            w = w + ySet[idx]*xSet[idx]  # updates w if and only if w is incorrect on the example.
+            # updates w if and only if w is incorrect on the example.
+            w = w + ySet[idx]*xSet[idx]
         else:
             cumuCorrect += 1
             if cumuCorrect >= cumuCorrectThold:
-                break  # stop updating and return w as wPLA if w is correct consecutively after checking 5N randomly-picked examples.
+                # stop updating and return w as wPLA if w is correct consecutively
+                # after checking 5N randomly-picked examples.
+                break
         t += 1
     wSet[testIdx] = w
     print("{}, ".format(testIdx), end="")
 print("\n\nDone!")
-print("Average squared length of wPLA:", (wSet**2).sum(axis=1).mean())  # show the average squared length of wPLA
+# show the average squared length of wPLA
+print("Average squared length of wPLA:", (wSet**2).sum(axis=1).mean())
