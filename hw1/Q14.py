@@ -11,7 +11,8 @@ Description:
     Second is to define function I used in PLA algorithm. Third is to load data and do
     some preprocessing like adding x0 to every xn. Fourth is the key part for doing
     PLA loop (each experiment is done with different random seed).
-    For this question, there is a scaling factor which is implemented in third part - preprocess.
+    For this question, there is a scaling factor which is implemented in 
+    third part - preprocess.
 """
 
 
@@ -45,7 +46,8 @@ dataSet = np.genfromtxt("hw1_train.dat")
 x0 = 1
 dataSet = np.insert(dataSet, 0, x0, axis=1)
 xSet = dataSet[:, :-1]
-xSet = xSet*2  # scaling by factor of 2 for question 14
+# scaling by factor of 2 for question 14
+xSet = xSet*2
 ySet = dataSet[:, -1]
 
 # set other related parameters
