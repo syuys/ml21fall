@@ -6,6 +6,7 @@ Created on Sat Oct 16 07:36:11 2021
 @author: YI SIANG SYU
 
 Description:
+    Q16.
     There are four main parts in this .py file. First is to import necessary packages. 
     Second is to define function I used in PLA algorithm. Third is to load data and do
     some preprocessing like adding x0 to every xn. Fourth is the key part for doing
