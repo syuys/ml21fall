@@ -24,13 +24,24 @@ def generateSamples(N):
     samples[samples[:, 3]==-1, 1:3] = np.random.multivariate_normal(mean=[0, 4], cov=[[0.4, 0], [0, 0.4]], size=sum(samples[:, 3]==-1))
     return samples
 
-EinSet = []
+differenceSet = []
 for _ in range(100):
     train = generateSamples(200)
     test = generateSamples(5000)
     dagger = np.linalg.pinv(train[:, :3])
     wlin = np.matmul(dagger, train[:, 3])
-    # append squared-error for this wlin
-    EinSet.append(np.square(np.matmul(train[:, :3], wlin) - train[:, 3]).mean())
+    # calculate Ein for this wlin
+    trainPred = np.matmul(train[:, :3], wlin)
+    trainPred[trainPred>=0] = 1
+    trainPred[trainPred<0] = -1
+    Ein = np.mean(trainPred != train[:, 3])
+    # calculate Eout for this wlin
+    testPred = np.matmul(test[:, :3], wlin)
+    testPred[testPred>=0] = 1
+    testPred[testPred<0] = -1
+    Eout = np.mean(testPred != test[:, 3])
+    # append difference
+    differenceSet.append(abs(Ein-Eout))
+    
 
-EinSetMean = np.array(EinSet).mean()
+differenceSetMean = np.array(differenceSet).mean()
