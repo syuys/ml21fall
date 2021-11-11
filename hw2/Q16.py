@@ -16,8 +16,14 @@ def generateSamples(N):
     # x0
     samples[:, 0] = 1
     # x1, x2
-    samples[samples[:, 3]==1, 1:3] = np.random.multivariate_normal(mean=[2, 3], cov=[[0.6, 0], [0, 0.6]], size=sum(samples[:, 3]==1))
-    samples[samples[:, 3]==-1, 1:3] = np.random.multivariate_normal(mean=[0, 4], cov=[[0.4, 0], [0, 0.4]], size=sum(samples[:, 3]==-1))
+    samples[samples[:, 3]==1, 1:3] = +\
+        np.random.multivariate_normal(mean=[2, 3], 
+                                      cov=[[0.6, 0], [0, 0.6]], 
+                                      size=sum(samples[:, 3]==1))
+    samples[samples[:, 3]==-1, 1:3] = +\
+        np.random.multivariate_normal(mean=[0, 4], 
+                                      cov=[[0.4, 0], [0, 0.4]], 
+                                      size=sum(samples[:, 3]==-1))
     return samples
 
 
@@ -28,7 +34,10 @@ def generateOutliers(N):
     # x0
     outLiers[:, 0] = 1
     # x1, x2
-    outLiers[:, 1:3] = np.random.multivariate_normal(mean=[6, 0], cov=[[0.3, 0], [0, 0.1]], size=sum(outLiers[:, 3]==1))
+    outLiers[:, 1:3] = +\
+        np.random.multivariate_normal(mean=[6, 0], 
+                                      cov=[[0.3, 0], [0, 0.1]], 
+                                      size=sum(outLiers[:, 3]==1))
     return outLiers
 
 
@@ -51,8 +60,8 @@ if __name__ == '__main__':
         # generate data with a specific seed
         np.random.seed(idx)
         train = generateSamples(trainN)
-        outliers = generateOutliers(outliersN)  # outliers
-        train = np.concatenate((train, outliers), axis=0)  # add outliers to original training data
+        outliers = generateOutliers(outliersN)  # generate outliers
+        train = np.concatenate((train, outliers), axis=0)  # add outliers
         test = generateSamples(testN)
         
         # linear regression
@@ -66,7 +75,8 @@ if __name__ == '__main__':
         # logistic regression
         w = np.zeros(train.shape[1]-1)
         for _ in range(T):
-            gradient = np.mean(sigmoid(-train[:, -1] * np.matmul(w, train[:, :3].T)) * (-train[:, -1].reshape(-1, 1)*train[:, :3]).T, axis=1)
+            gradient = np.mean(sigmoid(-train[:, -1] * np.matmul(w, train[:, :3].T)) * 
+                               (-train[:, -1].reshape(-1, 1)*train[:, :3]).T, axis=1)
             w = w - eta*gradient
         testPred = sigmoid(np.matmul(w, test[:, :3].T))
         testPred[testPred>=0.5] = 1

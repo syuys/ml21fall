@@ -17,8 +17,14 @@ def generateSamples(N):
     # x0
     samples[:, 0] = 1
     # x1, x2
-    samples[samples[:, 3]==1, 1:3] = np.random.multivariate_normal(mean=[2, 3], cov=[[0.6, 0], [0, 0.6]], size=sum(samples[:, 3]==1))
-    samples[samples[:, 3]==-1, 1:3] = np.random.multivariate_normal(mean=[0, 4], cov=[[0.4, 0], [0, 0.4]], size=sum(samples[:, 3]==-1))
+    samples[samples[:, 3]==1, 1:3] = +\
+        np.random.multivariate_normal(mean=[2, 3], 
+                                      cov=[[0.6, 0], [0, 0.6]], 
+                                      size=sum(samples[:, 3]==1))
+    samples[samples[:, 3]==-1, 1:3] = +\
+        np.random.multivariate_normal(mean=[0, 4], 
+                                      cov=[[0.4, 0], [0, 0.4]], 
+                                      size=sum(samples[:, 3]==-1))
     return samples
 
 
