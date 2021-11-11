@@ -7,10 +7,7 @@ Created on Sat Nov  6 11:16:01 2021
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
-plt.rcParams.update({"mathtext.default": "regular"})
-plt.rcParams["font.family"] = "Times New Roman"
-plt.rcParams["figure.dpi"] = 300
+
 
 def generateSamples(N):
     samples = np.empty((N, 4))  # 4 --> x0, x1, x2, y
@@ -24,24 +21,32 @@ def generateSamples(N):
     samples[samples[:, 3]==-1, 1:3] = np.random.multivariate_normal(mean=[0, 4], cov=[[0.4, 0], [0, 0.4]], size=sum(samples[:, 3]==-1))
     return samples
 
+
 differenceSet = []
-for _ in range(100):
+for idx in range(100):
+    # generate data with a specific seed
+    np.random.seed(idx)
     train = generateSamples(200)
     test = generateSamples(5000)
+    
+    # linear regression
     dagger = np.linalg.pinv(train[:, :3])
     wlin = np.matmul(dagger, train[:, 3])
+    
     # calculate Ein for this wlin
     trainPred = np.matmul(train[:, :3], wlin)
     trainPred[trainPred>=0] = 1
     trainPred[trainPred<0] = -1
     Ein = np.mean(trainPred != train[:, 3])
+    
     # calculate Eout for this wlin
     testPred = np.matmul(test[:, :3], wlin)
     testPred[testPred>=0] = 1
     testPred[testPred<0] = -1
     Eout = np.mean(testPred != test[:, 3])
-    # append difference
-    differenceSet.append(abs(Ein-Eout))
     
+    # append difference
+    differenceSet.append(abs(Ein-Eout))    
 
+# final result
 differenceSetMean = np.array(differenceSet).mean()

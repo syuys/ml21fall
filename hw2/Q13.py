@@ -7,10 +7,7 @@ Created on Sat Nov  6 10:09:13 2021
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
-plt.rcParams.update({"mathtext.default": "regular"})
-plt.rcParams["font.family"] = "Times New Roman"
-plt.rcParams["figure.dpi"] = 300
+
 
 def generateSamples(N):
     samples = np.empty((N, 4))  # 4 --> x0, x1, x2, y
@@ -24,12 +21,19 @@ def generateSamples(N):
     samples[samples[:, 3]==-1, 1:3] = np.random.multivariate_normal(mean=[0, 4], cov=[[0.4, 0], [0, 0.4]], size=sum(samples[:, 3]==-1))
     return samples
 
+
 EinSet = []
-for _ in range(100):
+for idx in range(100):
+    # generate data with a specific seed
+    np.random.seed(idx)
     train = generateSamples(200)
+    
+    # linear regression
     dagger = np.linalg.pinv(train[:, :3])
     wlin = np.matmul(dagger, train[:, 3])
+    
     # append squared-error for this wlin
     EinSet.append(np.square(np.matmul(train[:, :3], wlin) - train[:, 3]).mean())
 
+# final result
 EinSetMean = np.array(EinSet).mean()
