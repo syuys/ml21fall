@@ -48,7 +48,8 @@ for i in range(1, 11):
     testPred[testPred<0] = -1
     Eout = np.mean(testPred != testData[:, -1])
     
-    # save final result
+    # save result
     resultSet.append(abs(Ein-Eout))
 
+# save final best idx
 bestIdx = np.argmin(resultSet)

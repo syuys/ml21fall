@@ -9,10 +9,8 @@ Created on Mon Nov 22 00:32:33 2021
 import numpy as np
 
 
-def getTransform(x):
-    dim = x.shape[1]
-    # transform, randomly chooses 5 out of 10 dimensions
-    idxSet = np.random.choice(dim, 5, replace=False)
+def getTransform(x, idxSet):    
+    # do transform
     x = x[:, idxSet]
     # add x0 = 1
     z = np.insert(x, 0, 1, axis=1)    
@@ -27,12 +25,13 @@ testDataPath = "hw3_test.dat"
 rawTrainData = np.genfromtxt(trainDataPath)
 rawTestData = np.genfromtxt(testDataPath)
 
-# main - evaluate each transform function
+# main
 resultSet = []
-for _ in range(100000):
-    # do transform that randomly chooses 5 out of 10 dimensions
-    trainData = np.concatenate((getTransform(rawTrainData[:, :-1]), rawTrainData[:, -1][:, None]), axis=1)
-    testData = np.concatenate((getTransform(rawTestData[:, :-1]), rawTestData[:, -1][:, None]), axis=1)
+for _ in range(200):
+    # do transform that randomly chooses 5 distinct dimensions.
+    chosenIdx = np.random.choice(rawTrainData.shape[1]-1, 5, replace=False)
+    trainData = np.concatenate((getTransform(rawTrainData[:, :-1], chosenIdx), rawTrainData[:, -1][:, None]), axis=1)
+    testData = np.concatenate((getTransform(rawTestData[:, :-1], chosenIdx), rawTestData[:, -1][:, None]), axis=1)
     
     # do linear regression
     dagger = np.linalg.pinv(trainData[:, :-1])
@@ -50,7 +49,8 @@ for _ in range(100000):
     testPred[testPred<0] = -1
     Eout = np.mean(testPred != testData[:, -1])
     
-    # save final result
+    # save result
     resultSet.append(abs(Ein-Eout))
 
+# get the final mean
 resultSetMean = np.mean(resultSet)

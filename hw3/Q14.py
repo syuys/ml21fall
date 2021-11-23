@@ -32,7 +32,7 @@ testDataPath = "hw3_test.dat"
 trainData = np.genfromtxt(trainDataPath)
 testData = np.genfromtxt(testDataPath)
 
-# homogeneous order-Q polynomial transform
+# full order-2 polynomial transform
 trainData = np.concatenate((getFullOrder2(trainData[:, :-1]), trainData[:, -1][:, None]), axis=1)
 testData = np.concatenate((getFullOrder2(testData[:, :-1]), testData[:, -1][:, None]), axis=1)
 
