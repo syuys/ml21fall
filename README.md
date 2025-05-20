@@ -42,7 +42,7 @@ Additionally, homework assignments might utilize other datasets, such as `hw4_tr
 
 ## Code Structure
 
-The repository is organized into directories for each homework (`hw1` to `hw6`) and a `finalproject` directory. Python scripts within these directories implement algorithms and solutions related to the respective assignments or project components. Common libraries used include `numpy`, `pandas`, `matplotlib`, and `scikit-learn`. The final project also utilizes `glob` and `os` for file system operations. Some homework assignments (e.g., `hw4`) use the `LIBLINEAR` library.
+The repository is organized into directories for each homework (`hw1` to `hw6`) and a `finalproject` directory. Python scripts within these directories implement algorithms and solutions related to the respective assignments or project components. Common libraries used include `numpy`, `pandas`, `matplotlib`, and `scikit-learn`. Some homework assignments (e.g., `hw4`) use the `LIBLINEAR` library.
 
 ---
 
