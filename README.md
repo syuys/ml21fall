@@ -6,8 +6,8 @@ This repository contains coursework for a Machine Learning course (NTU, Fall 202
 
 The repository includes materials for Homework 1 through Homework 6. Each homework directory (`hw1` through `hw6`) typically contains:
 * A PDF file with the assignment questions (e.g., `ML2021_HW1.pdf`).
-* Python scripts (`.py`) which appear to be implementations or solutions for specific questions (e.g., `PLA_algorithm.py` in `hw1`, `Q14.py` in `hw4` which uses LIBLINEAR).
-* PDF files with solutions (e.g., `Final_sol.pdf` in `hw1`, `Solution.pdf` in `hw2`).
+* Python scripts (`.py`) which are solutions for coding questions (e.g., `PLA_algorithm.py` in `hw1`, `Q14.py` in `hw4` which uses LIBLINEAR).
+* PDF files with solutions related to math problems and theory proof. (e.g., `Final_sol.pdf` in `hw1`, `Solution.pdf` in `hw2`).
 
 Topics covered in the homeworks include:
 * The Learning Problem, Perceptron Learning Algorithm (PLA) (Homework 1)
@@ -17,11 +17,11 @@ Topics covered in the homeworks include:
 
 ## Final Project
 
-The `finalproject` directory contains a project that appears to focus on **telecom customer churn prediction**.
+The `finalproject` directory contains a project that focus on **telecom customer churn prediction**.
 The project involves several stages:
 * **Data Merging**: The `finalproject/merge.py` script combines various CSV datasets located in `finalproject/dataset/`. These datasets include customer demographics, location data, population statistics, service usage, satisfaction scores, and churn status. The merged data is saved as `merge.csv`.
 * **Data Preprocessing**: The `finalproject/preprocess.py` script performs data cleaning, transformation (e.g., using LabelEncoder), and likely feature engineering. The preprocessed data appears to be saved as `merge_after_preprocessing.csv`.
-* **Model Training and Testing**: While `main.py` and `test.py` in the `finalproject` directory suggest model training and evaluation, their specific implementations are not fully detailed in the provided snippets. `sample_submission.csv` suggests a prediction task where churn categories are predicted for test customer IDs.
+* **Model Training and Testing**: `main.py` and `test.py` in the `finalproject` directory are for model training, validation, parameter tuning. `sample_submission.csv` refers to a prediction task where churn categories are predicted for test customer IDs. Models explored are: **DNN**, **XGBoost**, **SVM**.
 
 ## Datasets
 
@@ -37,8 +37,6 @@ The primary datasets used in this repository are for the final project, located 
 * `satisfaction.csv`
 * `services.csv`
 * `status.csv`
-
-Additionally, homework assignments might utilize other datasets, such as `hw4_train.txt`, `hw4_test.txt`, `satimage.scale.txt`, and `satimage.scale.t.txt`.
 
 ## Code Structure
 
